@@ -1,0 +1,19 @@
+{
+    "name": "phyper/phyper",
+    "description": "PHP hyperscript",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
+    },
+    "license": "ISC",
+    "authors": [
+        {
+            "name": "Warren Whipple",
+            "email": "w@warrenwhipple.com"
+        }
+    ],
+    "require": {},
+    "scripts": {
+        "test": "phpunit tests"
+    }
+}

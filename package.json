@@ -1,0 +1,24 @@
+{
+    "name": "phyper-dev",
+    "description": "JS dev tools for PHP phyper",
+    "private": true,
+    "scripts": {
+        "test": "vendor/bin/phpunit --testdox --color tests",
+        "dev": "watch \"clear && npm run test -s\" src tests --interval=0.2"
+    },
+    "author": "Warren Whipple",
+    "license": "ISC",
+    "devDependencies": {
+        "@prettier/plugin-php": "^0.12.0",
+        "prettier": "^1.19.1",
+        "watch": "^1.0.2"
+    },
+    "prettier": {
+        "braceStyle": "1tbs",
+        "semi": false,
+        "singleQuote": true,
+        "tabWidth": 4,
+        "trailingComma": "es5",
+        "trailingCommaPHP": "php5"
+    }
+}
