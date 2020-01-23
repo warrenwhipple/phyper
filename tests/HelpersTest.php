@@ -3,15 +3,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../src/index.php';
 require_once __DIR__ . '/../src/helpers.php';
 use PHPUnit\Framework\TestCase;
-use function phyper\helpers\div;
-use function phyper\helpers\h1;
-use function phyper\helpers\p;
-use function phyper\helpers\ul;
-use function phyper\helpers\li;
-use function phyper\helpers\br;
-use function phyper\helpers\hr;
-use function phyper\helpers\img;
-use function phyper\helpers\input;
+use function phyper\helpers\{div, h1, p, ul, li, br, hr, img, input};
 
 class HelpersTest extends TestCase {
     public function testRendersAttributesAndChildren() {

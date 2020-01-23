@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require_once __DIR__ . '/../src/index.php';
 use PHPUnit\Framework\TestCase;
-use function phyper\core\utils\renderAttribute as r;
+use function phyper\utils\render_attribute as r;
 
 class RenderAttributeTest extends TestCase {
     public function testRendersStringValue() {

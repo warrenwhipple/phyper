@@ -2,7 +2,7 @@
 declare(strict_types=1);
 namespace phyper\helpers;
 
-use function phyper\core\h;
+use function phyper\h;
 
 function div($props = null, ...$children): string {
     return h('div', $props, ...$children);

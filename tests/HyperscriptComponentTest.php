@@ -3,7 +3,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../src/index.php';
 require_once __DIR__ . '/../src/helpers.php';
 use PHPUnit\Framework\TestCase;
-use function phyper\core\h;
+use function phyper\h;
 use function phyper\helpers\{div, h1, p};
 
 function card(): callable {

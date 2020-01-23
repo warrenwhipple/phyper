@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require_once __DIR__ . '/../src/index.php';
 use PHPUnit\Framework\TestCase;
-use function phyper\core\utils\renderStyle as r;
+use function phyper\utils\render_style as r;
 
 class RenderStyleTest extends TestCase {
     public function testRendersString() {

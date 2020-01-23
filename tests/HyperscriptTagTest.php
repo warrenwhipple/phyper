@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require_once __DIR__ . '/../src/index.php';
 use PHPUnit\Framework\TestCase;
-use function phyper\core\h;
+use function phyper\h;
 
 class HyperscriptTagTest extends TestCase {
     public function testRendersTagWithAttributesAndChildren() {

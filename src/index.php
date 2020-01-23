@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
-namespace phyper\core {
-    use function phyper\core\utils\{
-        renderChildren,
-        renderClass,
-        renderStyle,
-        renderAttribute,
-        isVoidHtmlTag
+namespace phyper {
+    use function phyper\utils\{
+        render_children,
+        render_class,
+        render_style,
+        render_attribute,
+        is_void_html_tag
     };
 
     /** Phyper hyperscript function */
@@ -16,7 +16,7 @@ namespace phyper\core {
             $props = null;
         }
         if ($component === null) {
-            return renderChildren(
+            return render_children(
                 count($children) ? $children : $props['children']
             );
         } elseif (is_string($component)) {
@@ -24,20 +24,20 @@ namespace phyper\core {
             if (is_array($props)) {
                 foreach ($props as $k => $v) {
                     if ($k === 'class') {
-                        $render .= renderClass($v);
+                        $render .= render_class($v);
                     } elseif ($k === 'style') {
-                        $render .= renderStyle($v);
+                        $render .= render_style($v);
                     } elseif ($k !== 'children') {
-                        $render .= renderAttribute($k, $v);
+                        $render .= render_attribute($k, $v);
                     }
                 }
             }
-            if (isVoidHtmlTag($component)) {
+            if (is_void_html_tag($component)) {
                 return $render . '>';
             }
             return $render .
                 '>' .
-                renderChildren(
+                render_children(
                     count($children) ? $children : $props['children']
                 ) .
                 '</' .
@@ -59,19 +59,19 @@ namespace phyper\core {
     }
 }
 
-namespace phyper\core\utils {
-    function renderChildren($children): string {
+namespace phyper\utils {
+    function render_children($children): string {
         if (is_array($children)) {
             $render = '';
             foreach ($children as $child) {
-                $render .= renderChildren($child);
+                $render .= render_children($child);
             }
             return $render;
         }
         return strval($children);
     }
 
-    function renderClass($class): string {
+    function render_class($class): string {
         if (is_array($class)) {
             $classes = array_filter($class, function ($v) {
                 return is_string($v) && $v !== '';
@@ -85,7 +85,7 @@ namespace phyper\core\utils {
         return '';
     }
 
-    function renderStyle($style): string {
+    function render_style($style): string {
         if (is_array($style)) {
             $styles = [];
             foreach ($style as $k => $v) {
@@ -102,7 +102,7 @@ namespace phyper\core\utils {
         return '';
     }
 
-    function renderAttribute($k, $v): string {
+    function render_attribute($k, $v): string {
         if (is_string($k)) {
             if ($v === true) {
                 return ' ' . $k;
@@ -113,7 +113,7 @@ namespace phyper\core\utils {
         return '';
     }
 
-    function isVoidHtmlTag($tag) {
+    function is_void_html_tag($tag) {
         return in_array(
             $tag,
             [
