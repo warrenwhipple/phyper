@@ -4,7 +4,7 @@ require_once __DIR__ . '/../src/index.php';
 use PHPUnit\Framework\TestCase;
 use function phyper\h;
 
-class HyperscriptTagTest extends TestCase {
+class HyperscriptTest extends TestCase {
     public function testRendersTagWithAttributesAndChildren() {
         $html = '<tag k="v">content</tag>';
         $this->assertSame($html, h('tag', ['k' => 'v'], 'content'));
@@ -75,63 +75,12 @@ class HyperscriptTagTest extends TestCase {
         $this->assertSame($html, h('ul', h('li', 'a'), h('li', 'b')));
     }
 
-    public function testRendersUnwrappedChildrenFragment() {
-        $html = 'content';
-        $this->assertSame($html, h(null, 'content'));
-        $this->assertSame($html, h(null, null, 'content'));
-        $this->assertSame($html, h(null, 'con', 'tent'));
-        $this->assertSame($html, h(null, [], 'content'));
-        $this->assertSame($html, h(null, ['children' => 'content']));
-    }
-
-    public function testSuppressesFragmentAttributes() {
-        $html = 'content';
-        $this->assertSame($html, h(null, ['k' => 'v'], 'content'));
-        $this->assertSame(
-            $html,
-            h(null, ['k' => 'v', 'children' => 'content'])
-        );
-        $this->assertSame(
-            $html,
-            h(null, ['class' => 'a', 'children' => 'content'])
-        );
-        $this->assertSame(
-            $html,
-            h(null, ['class' => ['a'], 'children' => 'content'])
-        );
-        $this->assertSame(
-            $html,
-            h(null, ['style' => 'a:b', 'children' => 'content'])
-        );
-        $this->assertSame(
-            $html,
-            h(null, ['style' => ['a' => 'b'], 'children' => 'content'])
-        );
-    }
-
-    public function testOverridesPropsChildrenWithAnyArgumentChildren() {
-        $htmlContent = '<tag>args content</tag>';
-        $this->assertSame(
-            $htmlContent,
-            h('tag', ['children' => 'props content'], 'args content')
-        );
-        $htmlNoContent = '<tag></tag>';
-        $this->assertSame(
-            $htmlNoContent,
-            h('tag', ['children' => 'props content'], null)
-        );
-        $this->assertSame(
-            $htmlNoContent,
-            h('tag', ['children' => 'props content'], [])
-        );
-        $this->assertSame(
-            $htmlNoContent,
-            h('tag', ['children' => 'props content'], '')
-        );
-        $this->assertSame(
-            $htmlNoContent,
-            h('tag', ['children' => 'props content'], null, null)
-        );
+    public function testDefaultsEmptyTagToDiv() {
+        $html = '<div>content</div>';
+        $this->assertSame($html, h('div', 'content'));
+        $this->assertSame($html, h('div', null, 'content'));
+        $this->assertSame($html, h('div', 'con', 'tent'));
+        $this->assertSame($html, h('div', [], 'content'));
     }
 
     public function testRendersVoidElementTag() {
@@ -155,38 +104,8 @@ class HyperscriptTagTest extends TestCase {
 
     public function testSuppressesVoidElementTagChildren() {
         $html = '<img src="a.jpg">';
-        $this->assertSame(
-            $html,
-            h('img', ['src' => 'a.jpg'], 'argument content')
-        );
-        $this->assertSame(
-            $html,
-            h('img', ['src' => 'a.jpg'], 'argument content')
-        );
-        $this->assertSame(
-            $html,
-            h(
-                'img',
-                ['src' => 'a.jpg', 'children' => 'props content'],
-                'argument content'
-            )
-        );
-    }
-
-    public function testReturnsEmptyString() {
-        $this->assertSame('', h(null));
-        $this->assertSame('', h(null, null, null, null));
-        $this->assertSame('', h(null, [], [], []));
-        $this->assertSame('', h(null, '', '', ''));
-        $this->assertSame('', h(null, null, [[''], ''], [''], ''));
-        $this->assertSame('', h(null, ['k' => 'v']));
-        $this->assertSame('', h(null, ['class' => 'a']));
-        $this->assertSame('', h(null, ['class' => ['a']]));
-        $this->assertSame('', h(null, ['style' => 'a:b']));
-        $this->assertSame('', h(null, ['style' => ['a' => 'b']]));
-        $this->assertSame('', h(null, ['children' => null]));
-        $this->assertSame('', h(null, ['children' => []]));
-        $this->assertSame('', h(null, ['children' => '']));
-        $this->assertSame('', h(null, ['children' => [[''], '']]));
+        $this->assertSame($html, h('img', ['src' => 'a.jpg'], 'content'));
+        $this->assertSame($html, h('img', ['src' => 'a.jpg'], 'con', 'tent'));
+        $this->assertSame($html, h('img', ['src' => 'a.jpg'], ['con', 'tent']));
     }
 }

@@ -2,7 +2,7 @@
 declare(strict_types=1);
 require_once __DIR__ . '/../src/index.php';
 use PHPUnit\Framework\TestCase;
-use function phyper\utils\render_children as r;
+use function phyper\render_children as r;
 
 class RenderChildrenTest extends TestCase {
     public function testRendersString() {

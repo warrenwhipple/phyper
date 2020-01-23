@@ -2,64 +2,32 @@
 declare(strict_types=1);
 namespace phyper {
     use function phyper\utils\{
-        render_children,
         render_class,
         render_style,
         render_attribute,
         is_void_html_tag
     };
 
-    /** Phyper hyperscript function */
-    function h($component, $props = null, ...$children): string {
-        if (!is_array($props) || array_key_exists(0, $props)) {
-            array_unshift($children, $props);
+    function component_args(array $args, &$props, &$children) {
+        if (
+            array_key_exists(0, $args) &&
+            ($args[0] === null ||
+                (is_array($args[0]) && !array_key_exists(0, $args[0])))
+        ) {
+            $props = array_shift($args);
+        } else {
             $props = null;
         }
-        if ($component === null) {
-            return render_children(
-                count($children) ? $children : $props['children']
-            );
-        } elseif (is_string($component)) {
-            $render = '<' . $component;
-            if (is_array($props)) {
-                foreach ($props as $k => $v) {
-                    if ($k === 'class') {
-                        $render .= render_class($v);
-                    } elseif ($k === 'style') {
-                        $render .= render_style($v);
-                    } elseif ($k !== 'children') {
-                        $render .= render_attribute($k, $v);
-                    }
-                }
-            }
-            if (is_void_html_tag($component)) {
-                return $render . '>';
-            }
-            return $render .
-                '>' .
-                render_children(
-                    count($children) ? $children : $props['children']
-                ) .
-                '</' .
-                $component .
-                '>';
-        } elseif (is_callable($component)) {
-            if (count($children)) {
-                if (is_array($props)) {
-                    $props['children'] = $children;
-                } else {
-                    $props = ['children' => $children];
-                }
-            }
-            return strval($component($props));
+        $argCount = count($args);
+        if ($argCount === 1) {
+            $children = $args[0];
+        } elseif ($argCount > 1) {
+            $children = $args;
+        } else {
+            $children = null;
         }
-        throw new Exception(
-            'phyper/core/h() first argument must be string or callable or null.'
-        );
     }
-}
 
-namespace phyper\utils {
     function render_children($children): string {
         if (is_array($children)) {
             $render = '';
@@ -71,6 +39,31 @@ namespace phyper\utils {
         return strval($children);
     }
 
+    function h(string $tag, ...$args): string {
+        component_args($args, $props, $children);
+        if ($tag === '') {
+            $tag = 'div';
+        }
+        $render = '<' . $tag;
+        if (is_array($props)) {
+            foreach ($props as $k => $v) {
+                if ($k === 'class') {
+                    $render .= render_class($v);
+                } elseif ($k === 'style') {
+                    $render .= render_style($v);
+                } else {
+                    $render .= render_attribute($k, $v);
+                }
+            }
+        }
+        if (is_void_html_tag($tag)) {
+            return $render . '>';
+        }
+        return $render . '>' . render_children($children) . '</' . $tag . '>';
+    }
+}
+
+namespace phyper\utils {
     function render_class($class): string {
         if (is_array($class)) {
             $classes = array_filter($class, function ($v) {

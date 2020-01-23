@@ -1,77 +1,76 @@
 <?php
 declare(strict_types=1);
 namespace phyper\helpers;
-
 use function phyper\h;
 
-function div($props = null, ...$children): string {
-    return h('div', $props, ...$children);
+function div(...$args): string {
+    return h('div', ...$args);
 }
 
-function p($props = null, ...$children): string {
-    return h('p', $props, ...$children);
+function p(...$args): string {
+    return h('p', ...$args);
 }
 
-function span($props = null, ...$children): string {
-    return h('span', $props, ...$children);
+function span(...$args): string {
+    return h('span', ...$args);
 }
 
-function a($props = null, ...$children): string {
-    return h('a', $props, ...$children);
+function a(...$args): string {
+    return h('a', ...$args);
 }
 
-function ol($props = null, ...$children): string {
-    return h('ol', $props, ...$children);
+function ol(...$args): string {
+    return h('ol', ...$args);
 }
 
-function ul($props = null, ...$children): string {
-    return h('ul', $props, ...$children);
+function ul(...$args): string {
+    return h('ul', ...$args);
 }
 
-function li($props = null, ...$children): string {
-    return h('li', $props, ...$children);
+function li(...$args): string {
+    return h('li', ...$args);
 }
 
-function h1($props = null, ...$children): string {
-    return h('h1', $props, ...$children);
+function h1(...$args): string {
+    return h('h1', ...$args);
 }
 
-function h2($props = null, ...$children): string {
-    return h('h2', $props, ...$children);
+function h2(...$args): string {
+    return h('h2', ...$args);
 }
 
-function h3($props = null, ...$children): string {
-    return h('h3', $props, ...$children);
+function h3(...$args): string {
+    return h('h3', ...$args);
 }
 
-function h4($props = null, ...$children): string {
-    return h('h4', $props, ...$children);
+function h4(...$args): string {
+    return h('h4', ...$args);
 }
 
-function h5($props = null, ...$children): string {
-    return h('h5', $props, ...$children);
+function h5(...$args): string {
+    return h('h5', ...$args);
 }
 
-function h6($props = null, ...$children): string {
-    return h('h6', $props, ...$children);
+function h6(...$args): string {
+    return h('h6', ...$args);
 }
 
-function button($props = null, ...$children): string {
-    return h('button', $props, ...$children);
+function button(...$args): string {
+    return h('button', ...$args);
 }
 
-function br($props = null): string {
-    return h('br', $props);
+function br($attributes = null): string {
+    return h('br', $attributes);
 }
 
-function hr($props = null): string {
-    return h('hr', $props);
+function hr($attributes = null): string {
+    return h('hr', $attributes);
 }
 
-function img($props = null): string {
-    return h('img', $props);
+function img($attributes = null): string {
+    return h('img', $attributes);
 }
 
-function input($props = null): string {
-    return h('input', $props);
+function input($attributes = null): string {
+    return h('input', $attributes);
 }

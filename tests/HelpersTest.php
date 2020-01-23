@@ -50,8 +50,4 @@ class HelpersTest extends TestCase {
     public function testRendersVoidElementWithAttributes() {
         $this->assertSame('<img src="a.jpg">', img(['src' => 'a.jpg']));
     }
-
-    public function testSuppressesVoidElementChildren() {
-        $this->assertSame('<img>', img(['children' => 'a']));
-    }
 }
