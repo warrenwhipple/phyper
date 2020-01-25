@@ -77,10 +77,10 @@ class HyperscriptTest extends TestCase {
 
     public function testDefaultsEmptyTagToDiv() {
         $html = '<div>content</div>';
-        $this->assertSame($html, h('div', 'content'));
-        $this->assertSame($html, h('div', null, 'content'));
-        $this->assertSame($html, h('div', 'con', 'tent'));
-        $this->assertSame($html, h('div', [], 'content'));
+        $this->assertSame($html, h('', 'content'));
+        $this->assertSame($html, h('', null, 'content'));
+        $this->assertSame($html, h('', 'con', 'tent'));
+        $this->assertSame($html, h('', [], 'content'));
     }
 
     public function testRendersVoidElementTag() {
@@ -107,5 +107,19 @@ class HyperscriptTest extends TestCase {
         $this->assertSame($html, h('img', ['src' => 'a.jpg'], 'content'));
         $this->assertSame($html, h('img', ['src' => 'a.jpg'], 'con', 'tent'));
         $this->assertSame($html, h('img', ['src' => 'a.jpg'], ['con', 'tent']));
+    }
+
+    public function testParsesTagsWithClass() {
+        $html = '<div class="a b">content</div>';
+        $this->assertSame($html, h('.a.b', 'content'));
+        $this->assertSame($html, h('div.a.b', 'content'));
+        $this->assertSame($html, h('.a', ['class' => 'b'], 'content'));
+        $this->assertSame($html, h('.a', ['class' => ['b']], 'content'));
+    }
+
+    public function testParsesTagsWithId() {
+        $html = '<div id="a">content</div>';
+        $this->assertSame($html, h('#a', 'content'));
+        $this->assertSame($html, h('div#a', 'content'));
     }
 }
