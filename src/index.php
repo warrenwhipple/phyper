@@ -3,8 +3,9 @@ declare(strict_types=1);
 namespace phyper {
     use function phyper\utils\{
         parse_tag,
+        clsxArray,
         render_class,
-        render_style,
+        stlx,
         render_attribute,
         is_void_html_tag
     };
@@ -19,9 +20,15 @@ namespace phyper {
         if (is_array($props)) {
             foreach ($props as $k => $v) {
                 if ($k === 'class') {
-                    $render .= render_class($v);
+                    $class = clsx($v);
+                    if ($class) {
+                        $render .= ' class="' . $class . '"';
+                    }
                 } elseif ($k === 'style') {
-                    $render .= render_style($v);
+                    $style = stlx($v);
+                    if ($style) {
+                        $render .= ' style="' . $style . '"';
+                    }
                 } else {
                     $render .= render_attribute($k, $v);
                 }
@@ -51,6 +58,11 @@ namespace phyper {
         } else {
             $children = null;
         }
+    }
+
+    function clsx(...$args): string {
+        // Based on https://github.com/lukeed/clsx
+        return clsxArray($args);
     }
 
     function render_children($children): string {
@@ -99,33 +111,47 @@ namespace phyper\utils {
         }
     }
 
-    function render_class($class): string {
-        if (is_array($class)) {
-            $classes = array_filter($class, function ($v) {
-                return is_string($v) && $v !== '';
-            });
-            if (!empty($classes)) {
-                return ' class="' . implode(' ', $classes) . '"';
+    function clsxArray(array $mix) {
+        $render = '';
+        foreach ($mix as $k => $v) {
+            if (is_string($v)) {
+                if ($v) {
+                    if ($render) {
+                        $render .= ' ';
+                    }
+                    $render .= $v;
+                }
+            } elseif (is_array($v)) {
+                $v_render = clsxArray($v);
+                if ($v_render) {
+                    if ($render) {
+                        $render .= ' ';
+                    }
+                    $render .= $v_render;
+                }
+            } elseif (is_bool($v) && $v && is_string($k) && $k) {
+                if ($render) {
+                    $render .= ' ';
+                }
+                $render .= $k;
             }
-        } elseif (is_string($class) && $class !== '') {
-            return ' class="' . $class . '"';
         }
-        return '';
+        return $render;
     }
 
-    function render_style($style): string {
-        if (is_array($style)) {
+    function stlx($mix): string {
+        if (is_array($mix)) {
             $styles = [];
-            foreach ($style as $k => $v) {
+            foreach ($mix as $k => $v) {
                 if (is_string($k) && $v !== null && $v !== '') {
                     $styles[] = $k . ':' . $v;
                 }
             }
             if (!empty($styles)) {
-                return ' style="' . implode(';', $styles) . '"';
+                return implode(';', $styles);
             }
-        } elseif (is_string($style) && $style !== '') {
-            return ' style="' . $style . '"';
+        } elseif (is_string($mix)) {
+            return $mix;
         }
         return '';
     }
