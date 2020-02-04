@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/../src/index.php';
+require_once __DIR__ . '/../src/phyper.php';
 use PHPUnit\Framework\TestCase;
 use function phyper\render_children as r;
 

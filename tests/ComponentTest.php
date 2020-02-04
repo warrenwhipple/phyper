@@ -1,15 +1,13 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__ . '/../src/index.php';
-require_once __DIR__ . '/../src/helpers.php';
+require_once __DIR__ . '/../src/phyper.php';
 use PHPUnit\Framework\TestCase;
-use function phyper\{component_args, render_children};
-use function phyper\helpers\{div, h1, p};
+use function phyper\{h, component_args, render_children};
 
 function card(...$args): string {
     component_args($args, $props, $children);
     ['title' => $title] = $props;
-    return div([], h1($title), p($children));
+    return h('', [], h('h1', $title), h('p', $children));
 }
 
 class ComponentTest extends TestCase {
