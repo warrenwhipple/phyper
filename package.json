@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "test": "vendor/bin/phpunit --testdox --color tests",
-        "dev": "watch \"clear && npm run test -s\" src tests --interval=0.2"
+        "start": "watch \"clear && npm run test -s\" src tests --interval=0.2"
     },
     "author": "Warren Whipple",
     "license": "ISC",

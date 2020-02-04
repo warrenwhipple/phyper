@@ -1,5 +1,18 @@
 <?php
+/**
+ * Phyper
+ *
+ * PHP hyperscript and component functions
+ *
+ * @version 0.1.0
+ *
+ * @author Warren Whipple <w@warrenwhipple.com>
+ * @license ISC
+ * @link https://github.com/warrenwhipple/phyper
+ */
+
 declare(strict_types=1);
+
 namespace phyper {
     use function phyper\utils\{
         parse_tag,
